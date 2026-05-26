@@ -60,7 +60,7 @@
 
 /*速度限幅*/
 #define CHASSIS_SPEED_MAX 3.3f
-#define CHASSIS_OMEGA_Z_MAX 4.0f//3.3f
+#define CHASSIS_OMEGA_Z_MAX 6.6f//3.3f
 #define CHASSIS_SPIN_WOBBLE_AMP 0.5f //变速小陀螺叠加的正弦波幅值
 #define CHASSIS_SPIN_WOBBLE_FREQ 0.5f   //变速小陀螺叠加的正弦波频率
 

@@ -171,24 +171,6 @@ float Chassis_Get_Omega (void)
 	return v_total;    
 }
 
-/////////////////////////////////超电部分
-// Super_Capacitor_callback_t super_capacitor_data;
-
-// void Decode_Super_Capacitor(CAN_instance_t *super_cap)
-// {
-//     memcpy(&super_capacitor_data, super_cap->rx_buff, 8);
-// }
-
-// CAN_instance_t *Super_Capacitor_instance;
-
-// can_init_config_t super_capacitor_can_init_config = {
-//     .can_handle = &hfdcan1,
-//     .tx_id = 0x061,
-//     .rx_id = 0x051,
-//     .can_module_callback = Decode_Super_Capacitor,
-// };
-
-////////////////////////////////
 
 void Chassis_Super_Capacitor_Init(void)
 {
@@ -262,64 +244,17 @@ static void Remote_Ctrl(Chassis_CmdTypedef *chs)
 }
 ///////////////////////////////////////////
 
-void Keyboard_control_chassis(Chassis_CmdTypedef *chs)
-{
-    /*前进后退*/
-    if(((uint8_t)rc_ctl ->key->w==1))
-    {
-        if(chs -> vx<3)
-        {
-            chs -> vx += (float)KETBOARD_X_SEN ;//系数有待测量
-        }
-    }
-    if(((uint8_t)rc_ctl ->key->s==1))
-    {
-        if(chs -> vx>-3)
-        {
-            chs -> vx -= (float)KETBOARD_X_SEN ;
-        }
-    }
-    /*左右移动*/
-    if(((uint8_t)rc_ctl ->key->a==1))
-    {
-        if(chs -> vy<3)
-        {
-            chs -> vy += (float)KETBOARD_Y_SEN ;
-        }
-    }
-    if(((uint8_t)rc_ctl ->key->d==1))
-    {
-        if(chs -> vy>-3)
-        {
-            chs -> vy -= (float)KETBOARD_Y_SEN ;
-        }
-    }
-    /*左右旋转*/
-    if(((uint8_t)rc_ctl ->key->q==1))
-    {
-        if(chs ->omega_z <5)
-        {
-            chs -> omega_z += (float)KETBOARD_OMEGA_Z_SEN ;//系数待测量
-        }
-    }
-    if(((uint8_t)rc_ctl ->key->e==1))
-    {
-        if(chs ->omega_z >-5)
-        {
-            chs -> omega_z -= (float)KETBOARD_OMEGA_Z_SEN ;
-        }
-    }
-}
+
 
 #include "robot_frame_init.h"
 
-float chassis_speed=0;
-float chassis_target_speed=0;
+// float chassis_speed=0;
+// float chassis_target_speed=0;
 
 void Chassis_Ctrl_Remote(void)
 {
-    chassis_speed = chassis_m3508[0]->receive_data.speed * 2 * PI / 60.0f; 
-    chassis_target_speed = target_speed[0];
+    // chassis_speed = chassis_m3508[0]->receive_data.speed * 2 * PI / 60.0f; 
+    // chassis_target_speed = target_speed[0];
     Remote_Ctrl(&chassis_cmd);
 
         //模式处理
@@ -411,11 +346,13 @@ static void Keyboard_Ctrl(Chassis_CmdTypedef *chs)
     {
         if(temp_vx > 0)
         {
-            temp_vx -= KETBOARD_X_SEN;
+            temp_vx -= 4*KETBOARD_X_SEN;
+            if(temp_vx < 0) temp_vx = 0;
         }
         else if(temp_vx < 0)
         {
-            temp_vx += KETBOARD_X_SEN;
+            temp_vx += 4*KETBOARD_X_SEN;
+            if(temp_vx > 0) temp_vx = 0;
         }
     }
 
@@ -426,10 +363,12 @@ static void Keyboard_Ctrl(Chassis_CmdTypedef *chs)
         if(temp_vy > 0)
         {
             temp_vy -= 4*KETBOARD_Y_SEN;
+            if(temp_vy < 0) temp_vy = 0;
         }
         else if(temp_vy < 0)
         {
             temp_vy += 4*KETBOARD_Y_SEN;
+            if(temp_vy > 0) temp_vy = 0;
         }
     }
 

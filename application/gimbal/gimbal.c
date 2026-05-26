@@ -328,30 +328,7 @@ float head_t;
 float target_speed_yaw;
 float speed_ref;
 
-// float Gimbal_Limit(float temp)
-// {
-//    if(temp>GIMBAL_LIMIT_MAX)
-//       temp = GIMBAL_LIMIT_MAX;
-//    if(temp<-GIMBAL_LIMIT_MAX)
-//       temp = -GIMBAL_LIMIT_MAX;
-	  
-// 	  return temp;
-// }
 
-// void Mouse_control_gimbal(Gimbal_CmdTypedef *gim)
-// {
-// 	if(rc_ctl ->mouse.x)
-// 	{
-// 	   gim->yaw = rc_ctl ->mouse.x *KEYBOARD_YAW_SEN;
-// 	   gim->yaw = Gimbal_Limit(gim->yaw);
-// 	}
-// 	if(rc_ctl ->mouse.y)
-// 	{
-// 	   gim->pitch = rc_ctl ->mouse.y * KEYBOARD_HEAD_SEN;
-// 	   gim->pitch = Gimbal_Limit(gim->pitch);
-// 	}
-
-// }
 
 void Gimbal_Control_Remote(void)
 {
