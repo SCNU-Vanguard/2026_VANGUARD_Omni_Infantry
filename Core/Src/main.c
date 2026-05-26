@@ -119,7 +119,7 @@ int main(void)
   MX_I2C2_Init();
   MX_RNG_Init();
   /* USER CODE BEGIN 2 */
-  HAL_Delay(10);
+//  HAL_Delay(10);
   Robot_Frame_Init();
   /* USER CODE END 2 */
 
